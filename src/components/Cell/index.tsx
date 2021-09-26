@@ -1,3 +1,5 @@
+import './style.css'
+
 export type CellValue = '' | 'x' | 'o'
 
 const Cell: React.FC<{ value: CellValue }> = ({ value }) => {

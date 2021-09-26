@@ -1,13 +1,13 @@
 import Cell, { CellValue } from '../Cell';
+import './style.css'
 
 type Row = [CellValue, CellValue, CellValue];
 type GameBoard = [Row, Row, Row];
 
-
 const board: GameBoard = [
     ['', 'x', 'x'],
-    ['x', '', 'x'],
-    ['x', '', 'x']
+    ['o', '', 'o'],
+    ['x', '', 'o']
 ];
 
 const components: React.FC = () => {
