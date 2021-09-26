@@ -34,7 +34,7 @@ function App() {
         Eth tic-tac-toe
       </header>
 
-      <Menu hasGame={hasGame} />
+      <Menu hasGame={hasGame} setHasGame={setHasGame} />
 
       <p>Accounts[0]: {asyncState?.account}</p>
 
