@@ -4,21 +4,25 @@ import { AbiItem } from 'web3-utils'
 
 import './App.css';
 import Board from './lib/components/Board'
+import Menu from './lib/components/Menu';
 
 import { TTT_ABI, TTT_ADDRESS } from './lib/contract/abi';
 
 
 function App() {
-  const [state, setState] = useState<{ account: string }>()
+  const [asyncState, setAsyncState] = useState<{ account: string }>()
+  const [hasGame, setHasGame] = useState(false)
 
   async function loadBlockchainData() {
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
+    const web3 = new Web3(Web3.givenProvider || "http://localhost:9545")
     const accounts = await web3.eth.getAccounts()
-    setState({ account: accounts[0] })
+    setAsyncState({ account: accounts[0] })
 
     const contract = new web3.eth.Contract(TTT_ABI as AbiItem[], TTT_ADDRESS)
 
-    console.log({ contract })
+    // const gameId = contract.methods.newGame()
+
+    // console.log({ gameId })
   }
 
   // Load blockchain data on mount
@@ -30,9 +34,11 @@ function App() {
         Eth tic-tac-toe
       </header>
 
-      <p>Accounts[0]: {state?.account}</p>
+      <Menu hasGame={hasGame} />
 
-      <Board />
+      <p>Accounts[0]: {asyncState?.account}</p>
+
+      <Board hasGame={hasGame} />
     </div>
   );
 }

@@ -10,8 +10,9 @@ const board: GameBoard = [
     ['x', '', 'o']
 ];
 
-const components: React.FC = () => {
-
+type BoardProps = { hasGame: boolean }
+const components: React.FC<BoardProps> = ({ hasGame }) => {
+    if (!hasGame) return null
 
     return (
         <div className="board">
