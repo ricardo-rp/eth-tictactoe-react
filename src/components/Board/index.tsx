@@ -1,5 +1,5 @@
 import Cell, { CellValue } from '../Cell';
-import './style.css'
+import './Board.css'
 
 type Row = [CellValue, CellValue, CellValue];
 type GameBoard = [Row, Row, Row];

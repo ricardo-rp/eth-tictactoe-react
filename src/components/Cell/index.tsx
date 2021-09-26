@@ -1,4 +1,4 @@
-import './style.css'
+import './Cell.css'
 
 export type CellValue = '' | 'x' | 'o'
 
