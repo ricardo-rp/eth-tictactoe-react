@@ -14,11 +14,7 @@ const components: React.FC = () => {
 
     return (
         <div className="board">
-            {board.map(row => {
-                return row.map(value => {
-                    return <Cell value={value} />
-                })
-            })}
+            {board.map(row => row.map(value => <Cell value={value} />))}
         </div>)
 }
 
