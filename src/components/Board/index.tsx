@@ -12,9 +12,14 @@ const board: GameBoard = [
 
 const components: React.FC = () => {
 
+
     return (
         <div className="board">
-            {board.map(row => row.map(value => <Cell value={value} />))}
+            {board.map((row, rowIndex) =>
+                row.map((value, cellIndex) =>
+                    <Cell key={`${rowIndex}${cellIndex}`} value={value} />
+                )
+            )}
         </div>)
 }
 
