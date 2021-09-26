@@ -9,3 +9,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.App-header {
+  margin-bottom: 2rem;
+}

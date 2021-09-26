@@ -12386,7 +12386,7 @@ web3-shh@1.5.3:
     web3-core-subscriptions "1.5.3"
     web3-net "1.5.3"
 
-web3-utils@1.5.3:
+web3-utils@1.5.3, web3-utils@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-1.5.3.tgz#e914c9320cd663b2a09a5cb920ede574043eb437"
   integrity sha512-56nRgA+Ad9SEyCv39g36rTcr5fpsd4L9LgV3FK0aB66nAMazLAA6Qz4lH5XrUKPDyBIPGJIR+kJsyRtwcu2q1Q==
