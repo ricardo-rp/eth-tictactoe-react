@@ -1,18 +1,9 @@
-import Cell, { CellValue } from '../Cell';
+import { GameBoard } from '../../types';
+import Cell from '../Cell';
 import './Board.css'
 
-type Row = [CellValue, CellValue, CellValue];
-type GameBoard = [Row, Row, Row];
-
-const board: GameBoard = [
-    ['', 'x', 'x'],
-    ['o', '', 'o'],
-    ['x', '', 'o']
-];
-
-type BoardProps = { hasGame: boolean }
-const components: React.FC<BoardProps> = ({ hasGame }) => {
-    if (!hasGame) return null
+const Board: React.FC<{ board?: GameBoard }> = ({ board }) => {
+    if (!board) return null
 
     return (
         <div className="board">
@@ -24,4 +15,4 @@ const components: React.FC<BoardProps> = ({ hasGame }) => {
         </div>)
 }
 
-export default components;
+export default Board;
