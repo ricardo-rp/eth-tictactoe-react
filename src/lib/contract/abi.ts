@@ -1,4 +1,7 @@
-export const TTT_ADDRESS = '0x1735891D50D7c236A792006A1Ab6D42252FeFBdF'
+import { web3 } from "../utils/web3"
+import { AbiItem } from 'web3-utils'
+
+export const TTT_ADDRESS = '0xCD487b44Bc0211a25fDdda4Bc707a85b809D2e90'
 
 export const TTT_ABI = [
     {
@@ -129,6 +132,46 @@ export const TTT_ABI = [
         "constant": true
     },
     {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "name": "games",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "playerA",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "playerB",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "nonce",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum TicTacToe.Winners",
+                "name": "winner",
+                "type": "uint8"
+            },
+            {
+                "internalType": "enum TicTacToe.Players",
+                "name": "playerTurn",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+    },
+    {
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -180,42 +223,18 @@ export const TTT_ABI = [
             {
                 "components": [
                     {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "addr",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "nonce",
-                                "type": "uint256"
-                            }
-                        ],
-                        "internalType": "struct GameLibrary.Player",
+                        "internalType": "address",
                         "name": "playerA",
-                        "type": "tuple"
+                        "type": "address"
                     },
                     {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "addr",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "nonce",
-                                "type": "uint256"
-                            }
-                        ],
-                        "internalType": "struct GameLibrary.Player",
+                        "internalType": "address",
                         "name": "playerB",
-                        "type": "tuple"
+                        "type": "address"
                     },
                     {
                         "internalType": "uint256",
-                        "name": "timestamp",
+                        "name": "nonce",
                         "type": "uint256"
                     }
                 ],
@@ -282,52 +301,6 @@ export const TTT_ABI = [
     {
         "inputs": [
             {
-                "components": [
-                    {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "addr",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "nonce",
-                                "type": "uint256"
-                            }
-                        ],
-                        "internalType": "struct GameLibrary.Player",
-                        "name": "playerA",
-                        "type": "tuple"
-                    },
-                    {
-                        "components": [
-                            {
-                                "internalType": "address",
-                                "name": "addr",
-                                "type": "address"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "nonce",
-                                "type": "uint256"
-                            }
-                        ],
-                        "internalType": "struct GameLibrary.Player",
-                        "name": "playerB",
-                        "type": "tuple"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "timestamp",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct GameLibrary.Match",
-                "name": "m",
-                "type": "tuple"
-            },
-            {
                 "internalType": "bytes32",
                 "name": "_gameId",
                 "type": "bytes32"
@@ -359,4 +332,6 @@ export const TTT_ABI = [
         "stateMutability": "nonpayable",
         "type": "function"
     }
-]
+] as AbiItem[]
+
+export const contractInstance = new web3.eth.Contract(TTT_ABI, TTT_ADDRESS);

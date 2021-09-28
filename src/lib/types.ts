@@ -12,3 +12,9 @@ export type Match = {
     playerB: string;
     nonce: number;
 }
+
+export type Sig = {
+    v: string;
+    r: string;
+    s: string;
+}
