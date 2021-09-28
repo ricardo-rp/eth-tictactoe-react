@@ -18,8 +18,7 @@ export async function signGame(signer: string | null | undefined, addressA: stri
     };
     if (addressA !== signer && addressB !== signer)
         throw "You must be part of the game"
-    const pAsig = await web3.eth.sign(hashMatch(match), signer)
-
+    const pAsig = await web3.eth.personal.sign(hashMatch(match), signer, "")
     return { match, pAsig }
 }
 
@@ -31,9 +30,8 @@ export async function createGame(sender: string | null | undefined, addressA: st
     };
     const resA = util.fromRpcSig(sigA);
     const resB = util.fromRpcSig(sigB);
-    console.log({match, resA, resB})
-    await contractInstance.methods.newGame(match, resA, resB).call();
-    const gameId = await contractInstance.methods.newGame(match, resA, resB).send({from: sender});
+    const gameId = await contractInstance.methods.newGame(match, resA, resB).call();
+    await contractInstance.methods.newGame(match, resA, resB).send({from: sender});
     return gameId
 }
 
