@@ -6,6 +6,10 @@ export const TIC_TAC_TOE : IHash = {
     4: "0xf71d78FE823671ECaF37846993980ea224f6F2CF"
 }
 
+export const ELO_RATING : IHash = {
+    4: "0x946C72fEDD3904d3e031b40e07E4bD5a3Cd2c8AF"
+}
+
 export const TTT_ABI = [
     {
         "anonymous": false,
