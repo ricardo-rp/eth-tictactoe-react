@@ -18,3 +18,7 @@ export type Sig = {
     r: string;
     s: string;
 }
+
+export interface IHash {
+    [details: string] : string;
+} 

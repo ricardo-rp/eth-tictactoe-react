@@ -4,10 +4,11 @@ import useInput from './lib/hooks/useInput';
 import { createGame, signGame } from './lib/utils/createGame';
 import { injected } from './components/connector';
 import { useWeb3React } from '@web3-react/core';
+
 const board = false;
 
 function App() {
-  const { active, account, activate, deactivate } = useWeb3React();
+  const { active, account, chainId, activate, deactivate } = useWeb3React();
   const bindAddrA = useInput('') // Should bind automaticaly when login
   const bindAddrB = useInput('')
   const nonce = useInput('') // Should be a nonce
@@ -34,16 +35,17 @@ function App() {
   const onClickCreateGame = async () => {
     try {
       // Send to blockchain
-      if (bindAddrA.value && bindAddrB.value && nonce.value && sigA.value && sigB.value  ) {
+      if (bindAddrA.value && bindAddrB.value && nonce.value && sigA.value && sigB.value) {
         console.log("SEND TO BLOCKCHAIN")
-        const gameId = await createGame(account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value) , sigA.value, sigB.value)
+        const gameId = await createGame(chainId, account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value), sigA.value, sigB.value)
         console.log({ gameId })
       } else {
-        const game = await signGame(account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value))
-        console.log({ game })
+        const { match, pAsig } = await signGame(account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value))
+        console.log({ match })
+        console.log({ pAsig })
         // Sign
       }
-      
+
     } catch (e) {
       console.error(e)
     }

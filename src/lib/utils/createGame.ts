@@ -1,8 +1,7 @@
-import { contractInstance } from "../contract/abi";
+import { getContractInstance } from "../contract/abi";
 import { Match, Sig } from "../types"
 import { web3 } from "./web3"
 const util = require('ethereumjs-util')
-
 
 export type MatchSignedByA = {
     match: Match;
@@ -22,7 +21,7 @@ export async function signGame(signer: string | null | undefined, addressA: stri
     return { match, pAsig }
 }
 
-export async function createGame(sender: string | null | undefined, addressA: string, addressB: string, nonce: number, sigA: string, sigB: string): Promise<string> {
+export async function createGame(chainId: number | undefined, sender: string | null | undefined, addressA: string, addressB: string, nonce: number, sigA: string, sigB: string): Promise<string> {
     const match: Match = {
         playerA: addressA,
         playerB: addressB,
@@ -30,8 +29,8 @@ export async function createGame(sender: string | null | undefined, addressA: st
     };
     const resA = util.fromRpcSig(sigA);
     const resB = util.fromRpcSig(sigB);
-    const gameId = await contractInstance.methods.newGame(match, resA, resB).call();
-    await contractInstance.methods.newGame(match, resA, resB).send({from: sender});
+    const gameId = await getContractInstance(chainId).methods.newGame(match, resA, resB).call();
+    await getContractInstance(chainId).methods.newGame(match, resA, resB).send({ from: sender });
     return gameId
 }
 
