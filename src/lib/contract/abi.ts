@@ -2,11 +2,11 @@ import { web3 } from "../utils/web3"
 import { AbiItem } from 'web3-utils'
 import { IHash } from "../types";
 
-export const TIC_TAC_TOE : IHash = {
+export const TIC_TAC_TOE: IHash = {
     4: "0xf71d78FE823671ECaF37846993980ea224f6F2CF"
 }
 
-export const ELO_RATING : IHash = {
+export const ELO_RATING: IHash = {
     4: "0x946C72fEDD3904d3e031b40e07E4bD5a3Cd2c8AF"
 }
 
@@ -344,7 +344,7 @@ export const TTT_ABI = [
 // export const contractInstance = new web3.eth.Contract(TTT_ABI, TTT_ADDRESS);
 
 export function getContractInstance(chainId: number | undefined) {
-    if (chainId == undefined)
-        throw "ChainId undefined"
+    if (chainId === undefined)
+        throw Error("ChainId undefined")
     return new web3.eth.Contract(TTT_ABI, TIC_TAC_TOE[chainId]);
 }
