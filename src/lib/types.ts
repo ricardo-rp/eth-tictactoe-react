@@ -7,6 +7,11 @@ export type CellValue = '' | 'x' | 'o'
 export type Row = [CellValue, CellValue, CellValue];
 export type GameBoard = [Row, Row, Row];
 
+export type Coords = {
+    x: number,
+    y: number
+}
+
 export type Match = {
     playerA: string;
     playerB: string;

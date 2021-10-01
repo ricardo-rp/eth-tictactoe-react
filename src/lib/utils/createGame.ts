@@ -1,5 +1,5 @@
 import { getContractInstance } from "../contract/abi";
-import { Match } from "../types"
+import { Coords, Match } from "../types"
 import { web3 } from "./web3"
 const util = require('ethereumjs-util')
 
@@ -7,6 +7,8 @@ export type MatchSignedByA = {
     match: Match;
     pAsig: string;
 }
+
+// DEFINE GLOBALLY CHAIN_ ID, CURRENT ACCOUNT AND GAME ID
 
 // TODO Create an EIP712 compatible contract and frontend
 export async function signGame(signer: string | null | undefined, addressA: string, addressB: string, nonce: number): Promise<MatchSignedByA> {
@@ -34,5 +36,20 @@ export async function createGame(chainId: number | undefined, sender: string | n
     return gameId
 }
 
-const hashMatch = (match: Match): string =>
+export async function getBoard(chainId: number | undefined, gameId: string) {
+    const game = await getContractInstance(chainId).methods.games(gameId).call();
+    console.log(game);
+    console.log(game.board);
+    return game.board;
+}
+
+// export async function makeMove(coords: Coords) {
+//     const makeMove = getContractInstance(chainId).methods.makeMove(gameId, coords.x, coords.y);
+//     const response = await makeMove.call();
+//     await makeMove.send({ from: sender });
+
+//     return response;
+// }
+
+export const hashMatch = (match: Match): string =>
     web3.utils.soliditySha3(match.playerA, match.playerB, match.nonce) as string
