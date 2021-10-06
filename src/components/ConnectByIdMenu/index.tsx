@@ -1,4 +1,4 @@
-export const ConnectMenu: React.FC = () => {
+export const ConnectByIdMenu: React.FC = () => {
 
   return <>
     <h5 className="formLabel">Connect by GameId</h5>
