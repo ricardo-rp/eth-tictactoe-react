@@ -6,6 +6,13 @@ import { useWeb3React } from '@web3-react/core'
 import { ConnectByIdForm } from './components/ConnectByIdForm'
 import NewGameForm from './components/NewGameForm'
 
+/* TODO Change this patter to use layouts. Similar to this nextjs pattern:
+* https://www.youtube.com/watch?v=WOeLxL2DF3E&t=4s
+* https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
+*/
+
+import { GlobalStyle } from "./styles/global"
+
 function Game() {
   const { active, account, chainId, activate, deactivate } = useWeb3React()
 
@@ -68,12 +75,10 @@ function Game() {
   )
 }
 
-/* TODO Change this patter to use layouts. Similar to this nextjs pattern:
-* https://www.youtube.com/watch?v=WOeLxL2DF3E&t=4s
-* https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
-*/
+
 const App: React.FC = () => (
   <div className="App">
+    <GlobalStyle />
     <header className="App-header">
       Eth tic-tac-toe
     </header>
