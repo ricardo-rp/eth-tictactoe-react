@@ -4,6 +4,7 @@ import useInput from './lib/hooks/useInput';
 import { createGame, signGame } from './lib/utils/createGame';
 import { injected } from './components/connector';
 import { useWeb3React } from '@web3-react/core';
+import { ConnectMenu } from './components/ConnectMenu';
 
 function Game() {
   const { active, account, chainId, activate, deactivate } = useWeb3React();
@@ -77,13 +78,7 @@ function Game() {
         <button type="button" onClick={onClickCreateGame}>Submit</button>
       </form>
 
-      <h5 className="formLabel">Connect by GameId</h5>
-      <form className="form">
-        <label htmlFor="gameId">Game Id </label>
-        <input type="text" id="gameId" />
-
-        <button type="button" >Submit</button>
-      </form>
+      <ConnectMenu />
 
       <Board />
     </>
