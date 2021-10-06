@@ -5,7 +5,7 @@ type NewGameFormProps = {
 }
 const NewGameForm: React.FC<NewGameFormProps> = ({ active, account, onSubmit }) => {
 
-    // TODO: Install unform to handle form data and onSubmit function
+    // TODO: Install unform/formik to handle form data and onSubmit function
 
     return <form className="form" id="addressForm">
         <label>Player A Address</label>

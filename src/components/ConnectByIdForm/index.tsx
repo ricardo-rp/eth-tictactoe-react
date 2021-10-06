@@ -1,6 +1,6 @@
 export const ConnectByIdForm: React.FC = () => {
 
-  // TODO: Install unform to handle form data and onSubmit function
+  // TODO: Install unform/formik to handle form data and onSubmit function
 
   return <form className="form">
     <label htmlFor="gameId">Game Id </label>
