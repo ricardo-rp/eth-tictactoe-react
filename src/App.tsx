@@ -27,29 +27,31 @@ function Game() {
   }
 
   const onClickCreateGame = async () => {
-    try {
-      if (account && addrB && nonce && sigA && sigB) {
-        const gameId = await createGame(chainId, account, account, addrB, parseInt(nonce), sigA, sigB)
-        console.log({ gameId })
-      } else {
-        if (!account) return
-        const { match, pAsig } = await signGame(account, account, addrB, parseInt(nonce))
-        console.log({ match ,pAsig })
-        // Sign
-      }
+    console.log('onClickCreateGame')
+    // try {
+    //   if (account && addrB && nonce && sigA && sigB) {
+    //     const gameId = await createGame(chainId, account, account, addrB, parseInt(nonce), sigA, sigB)
+    //     console.log({ gameId })
+    //   } else {
+    //     if (!account) return
+    //     const { match, pAsig } = await signGame(account, account, addrB, parseInt(nonce))
+    //     console.log({ match ,pAsig })
+    //     // Sign
+    //   }
 
-    } catch (e) {
-      console.error(e)
-    }
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
 
   if (!active) return <button type="button" onClick={connect}>Connect to Metamask</button>
 
+  // TODO: Add tabs for user to select a menu
+  // TODO: Install styled-jsx and scope styles correctly
   return (
     <>
       <button type="button" onClick={disconnect}>Disconnect</button>
 
-      {/* Menu */}
       <h5 className="formLabel">New Game</h5>
       <NewGameForm
         active={active}
@@ -66,6 +68,10 @@ function Game() {
   )
 }
 
+/* TODO Change this patter to use layouts. Similar to this nextjs pattern:
+* https://www.youtube.com/watch?v=WOeLxL2DF3E&t=4s
+* https://adamwathan.me/2019/10/17/persistent-layout-patterns-in-nextjs/
+*/
 const App: React.FC = () => (
   <div className="App">
     <header className="App-header">
