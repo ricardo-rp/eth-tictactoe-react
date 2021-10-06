@@ -1,4 +1,4 @@
-import { CellValue } from '../../types'
+import { CellValue } from '../../lib/types'
 import './Cell.css'
 
 const Cell: React.FC<{ value: CellValue }> = ({ value }) => {

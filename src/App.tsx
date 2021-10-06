@@ -1,5 +1,5 @@
 import './App.css';
-import Board from './lib/components/Board'
+import Board from './components/Board'
 import useInput from './lib/hooks/useInput';
 import { createGame, signGame } from './lib/utils/createGame';
 import { injected } from './components/connector';
@@ -16,7 +16,7 @@ function Game() {
     try {
       await activate(injected);
     } catch (ex) {
-      console.log(ex)
+      console.error(ex)
     }
   }
 
@@ -25,7 +25,7 @@ function Game() {
     try {
       deactivate();
     } catch (ex) {
-      console.log(ex)
+      console.error(ex)
     }
   }
 
