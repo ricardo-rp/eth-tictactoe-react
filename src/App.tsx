@@ -9,7 +9,6 @@ const board = false;
 
 function App() {
   const { active, account, chainId, activate, deactivate } = useWeb3React();
-  const bindAddrA = useInput(account || '') // Should bind automaticaly when login
   const bindAddrB = useInput('')
   const nonce = useInput('') // Should be a nonce
   const sigA = useInput('') // Should be completed depending on the signature
@@ -35,12 +34,13 @@ function App() {
   const onClickCreateGame = async () => {
     try {
       // Send to blockchain
-      if (bindAddrA.value && bindAddrB.value && nonce.value && sigA.value && sigB.value) {
+      if (account && bindAddrB.value && nonce.value && sigA.value && sigB.value) {
         console.log("SEND TO BLOCKCHAIN")
-        const gameId = await createGame(chainId, account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value), sigA.value, sigB.value)
+        const gameId = await createGame(chainId, account, account, bindAddrB.value, parseInt(nonce.value), sigA.value, sigB.value)
         console.log({ gameId })
       } else {
-        const { match, pAsig } = await signGame(account, bindAddrA.value, bindAddrB.value, parseInt(nonce.value))
+        if (!account) return
+        const { match, pAsig } = await signGame(account, account, bindAddrB.value, parseInt(nonce.value))
         console.log({ match })
         console.log({ pAsig })
         // Sign
@@ -51,47 +51,53 @@ function App() {
     }
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
         Eth tic-tac-toe
       </header>
 
-      {active ? <button type="button" onClick={disconnect}>Disconnect</button> : <button type="button" onClick={connect}>Connect to Metamask</button>}
-      {active ? account : "Not Connected"}
-      {/* Menu */}
-      {!board && <div>
-        <h5 className="formLabel">New Game</h5>
-        <form className="form" id="addressForm">
-          <label>Player A Address</label>
-          <input id="addressA" {...bindAddrA} />  {/* Should auto-complete */}
+      {active ? <>
+        <button type="button" onClick={disconnect}>Disconnect</button>
 
-          <label htmlFor="addressB">Player B Address</label>
-          <input id="addressB" {...bindAddrB} />
+        {/* Menu */}
+        {!board && <div>
+          <h5 className="formLabel">New Game</h5>
+          <form className="form" id="addressForm">
+            <label>Player A Address</label>
+            <label>{active ? account : "Not Connected"}</label>
+            <input id="addressA" value={account || ''} style={{ display: 'none' }} />  {/* Should auto-complete */}
 
-          <label htmlFor="nonce">Nonce</label>
-          <input id="nonce" {...nonce} />
+            <label htmlFor="addressB">Player B Address</label>
+            <input id="addressB" {...bindAddrB} />
 
-          <label htmlFor="sigA">Player A Signature</label>
-          <input id="sigA" {...sigA} />
+            <label htmlFor="nonce">Nonce</label>
+            <input id="nonce" {...nonce} />
 
-          <label htmlFor="sigB">Player B Signature</label>
-          <input id="sigB" {...sigB} />
+            <label htmlFor="sigA">Player A Signature</label>
+            <input id="sigA" {...sigA} />
 
-          <button type="button" onClick={onClickCreateGame}>Submit</button>
-        </form>
+            <label htmlFor="sigB">Player B Signature</label>
+            <input id="sigB" {...sigB} />
 
-        <h5 className="formLabel">Connect by GameId</h5>
-        <form className="form">
-          <label htmlFor="gameId">Game Id </label>
-          <input type="text" id="gameId" />
+            <button type="button" onClick={onClickCreateGame}>Submit</button>
+          </form>
 
-          <button type="button" >Submit</button>
-        </form>
-      </div>}
+          <h5 className="formLabel">Connect by GameId</h5>
+          <form className="form">
+            <label htmlFor="gameId">Game Id </label>
+            <input type="text" id="gameId" />
 
-      {/* Board */}
-      <Board />
+            <button type="button" >Submit</button>
+          </form>
+        </div>}
+
+        {/* Board */}
+        <Board />
+      </>
+        :
+        <button type="button" onClick={connect}>Connect to Metamask</button>}
     </div>
   )
 }
