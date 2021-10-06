@@ -9,7 +9,7 @@ const board = false;
 
 function App() {
   const { active, account, chainId, activate, deactivate } = useWeb3React();
-  const bindAddrA = useInput('') // Should bind automaticaly when login
+  const bindAddrA = useInput(account || '') // Should bind automaticaly when login
   const bindAddrB = useInput('')
   const nonce = useInput('') // Should be a nonce
   const sigA = useInput('') // Should be completed depending on the signature
