@@ -1,21 +1,17 @@
-import './App.css';
+import './App.css'
 import Board from './components/Board'
-import useInput from './lib/hooks/useInput';
-import { createGame, signGame } from './lib/utils/createGame';
-import { injected } from './components/connector';
-import { useWeb3React } from '@web3-react/core';
-import { ConnectByIdMenu } from './components/ConnectByIdMenu'
+import { createGame, signGame } from './lib/utils/createGame'
+import { injected } from './components/connector'
+import { useWeb3React } from '@web3-react/core'
+import { ConnectByIdForm } from './components/ConnectByIdForm'
+import NewGameForm from './components/NewGameForm'
 
 function Game() {
-  const { active, account, chainId, activate, deactivate } = useWeb3React();
-  const bindAddrB = useInput('')
-  const nonce = useInput('') // Should be a nonce
-  const sigA = useInput('') // Should be completed depending on the signature
-  const sigB = useInput('')
+  const { active, account, chainId, activate, deactivate } = useWeb3React()
 
   async function connect() {
     try {
-      await activate(injected);
+      await activate(injected)
     } catch (ex) {
       console.error(ex)
     }
@@ -24,7 +20,7 @@ function Game() {
 
   function disconnect() {
     try {
-      deactivate();
+      deactivate()
     } catch (ex) {
       console.error(ex)
     }
@@ -32,16 +28,13 @@ function Game() {
 
   const onClickCreateGame = async () => {
     try {
-      // Send to blockchain
-      if (account && bindAddrB.value && nonce.value && sigA.value && sigB.value) {
-        console.log("SEND TO BLOCKCHAIN")
-        const gameId = await createGame(chainId, account, account, bindAddrB.value, parseInt(nonce.value), sigA.value, sigB.value)
+      if (account && addrB && nonce && sigA && sigB) {
+        const gameId = await createGame(chainId, account, account, addrB, parseInt(nonce), sigA, sigB)
         console.log({ gameId })
       } else {
         if (!account) return
-        const { match, pAsig } = await signGame(account, account, bindAddrB.value, parseInt(nonce.value))
-        console.log({ match })
-        console.log({ pAsig })
+        const { match, pAsig } = await signGame(account, account, addrB, parseInt(nonce))
+        console.log({ match ,pAsig })
         // Sign
       }
 
@@ -58,27 +51,15 @@ function Game() {
 
       {/* Menu */}
       <h5 className="formLabel">New Game</h5>
-      <form className="form" id="addressForm">
-        <label>Player A Address</label>
-        <label>{active ? account : "Not Connected"}</label>
-        <input id="addressA" value={account || ''} style={{ display: 'none' }} />  {/* Should auto-complete */}
+      <NewGameForm
+        active={active}
+        // We already checked the connection is active. `account` is defined
+        account={account as string}
+        onSubmit={onClickCreateGame}
+      />
 
-        <label htmlFor="addressB">Player B Address</label>
-        <input id="addressB" {...bindAddrB} />
-
-        <label htmlFor="nonce">Nonce</label>
-        <input id="nonce" {...nonce} />
-
-        <label htmlFor="sigA">Player A Signature</label>
-        <input id="sigA" {...sigA} />
-
-        <label htmlFor="sigB">Player B Signature</label>
-        <input id="sigB" {...sigB} />
-
-        <button type="button" onClick={onClickCreateGame}>Submit</button>
-      </form>
-
-      <ConnectByIdMenu />
+      <h5 className="formLabel">Connect by GameId</h5>
+      <ConnectByIdForm />
 
       <Board />
     </>
@@ -95,4 +76,4 @@ const App: React.FC = () => (
   </div>
 )
 
-export default App;
+export default App

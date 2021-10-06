@@ -1,6 +1,6 @@
 import { web3 } from "../utils/web3"
 import { AbiItem } from 'web3-utils'
-import { IHash } from "../types";
+import { IHash } from "../types"
 
 export const TIC_TAC_TOE: IHash = {
     4: "0xf71d78FE823671ECaF37846993980ea224f6F2CF"
@@ -341,10 +341,10 @@ export const TTT_ABI = [
     }
 ] as AbiItem[]
 
-// export const contractInstance = new web3.eth.Contract(TTT_ABI, TTT_ADDRESS);
+// export const contractInstance = new web3.eth.Contract(TTT_ABI, TTT_ADDRESS)
 
 export function getContractInstance(chainId: number | undefined) {
     if (chainId === undefined)
         throw Error("ChainId undefined")
-    return new web3.eth.Contract(TTT_ABI, TIC_TAC_TOE[chainId]);
+    return new web3.eth.Contract(TTT_ABI, TIC_TAC_TOE[chainId])
 }

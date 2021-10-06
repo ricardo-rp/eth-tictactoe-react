@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import Web3 from 'web3';
-import { provider } from 'web3-core';
-import { Web3ReactProvider } from '@web3-react/core';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import Web3 from 'web3'
+import { provider } from 'web3-core'
+import { Web3ReactProvider } from '@web3-react/core'
 
 function getLibrary(provider: provider) {
-  return new Web3(provider);
+  return new Web3(provider)
 }
 
 ReactDOM.render(
@@ -17,4 +17,4 @@ ReactDOM.render(
     </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
-);
+)

@@ -1,5 +1,5 @@
-import { GameBoard } from '../../lib/types';
-import Cell from './Cell';
+import { GameBoard } from '../../lib/types'
+import Cell from './Cell'
 import './Board.css'
 
 export const defBoard: GameBoard = [
@@ -22,4 +22,4 @@ const Board: React.FC<{ board?: GameBoard }> = ({ board  }) => {
     )
 }
 
-export default Board;
+export default Board
