@@ -1,8 +1,14 @@
 import { GameBoard } from '../../lib/types';
-import Cell from '../Cell';
+import Cell from './Cell';
 import './Board.css'
 
-const Board: React.FC<{ board?: GameBoard }> = ({ board }) => {
+export const defBoard: GameBoard = [
+    ['', '', '',],
+    ['', '', '',],
+    ['', '', '',],
+]
+
+const Board: React.FC<{ board?: GameBoard }> = ({ board  }) => {
     if (!board) return null
 
     return (
@@ -12,7 +18,8 @@ const Board: React.FC<{ board?: GameBoard }> = ({ board }) => {
                     <Cell key={`${rowIndex}${cellIndex}`} value={value} />
                 )
             )}
-        </div>)
+        </div>
+    )
 }
 
 export default Board;
