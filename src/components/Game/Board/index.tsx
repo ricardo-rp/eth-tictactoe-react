@@ -1,5 +1,5 @@
 import { GameBoard } from '../../../lib/types'
-import Cell from './Cell'
+import { Cell } from './Cell'
 import { StyledBoard } from './styles'
 
 export const defBoard: GameBoard = [
