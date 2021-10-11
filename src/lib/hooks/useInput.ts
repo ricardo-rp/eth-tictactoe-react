@@ -5,7 +5,7 @@ type BindInput = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function useInput(initialValue: string): BindInput {
+export function useInput(initialValue: string): BindInput {
   const [value, setValue] = useState(initialValue)
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,5 +14,3 @@ function useInput(initialValue: string): BindInput {
 
   return { value, onChange }
 }
-
-export default useInput

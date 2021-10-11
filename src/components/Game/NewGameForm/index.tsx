@@ -5,7 +5,7 @@ type NewGameFormProps = {
   account: string
   onSubmit: () => Promise<void>
 }
-const NewGameForm: React.FC<NewGameFormProps> = ({
+export const NewGameForm: React.FC<NewGameFormProps> = ({
   active,
   account,
   onSubmit,
@@ -36,5 +36,3 @@ const NewGameForm: React.FC<NewGameFormProps> = ({
     </Form>
   )
 }
-
-export default NewGameForm
