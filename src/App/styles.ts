@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   text-align: center;
@@ -11,4 +11,3 @@ export const Container = styled.div`
 export const Header = styled.header`
   margin-bottom: 2rem;
 `
-  

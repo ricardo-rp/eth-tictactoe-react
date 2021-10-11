@@ -3,23 +3,23 @@ import Cell from './Cell'
 import './Board.css'
 
 export const defBoard: GameBoard = [
-    ['', '', '',],
-    ['', '', '',],
-    ['', '', '',],
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', ''],
 ]
 
-const Board: React.FC<{ board?: GameBoard }> = ({ board  }) => {
-    if (!board) return null
+const Board: React.FC<{ board?: GameBoard }> = ({ board }) => {
+  if (!board) return null
 
-    return (
-        <div className="board">
-            {board.map((row, rowIndex) =>
-                row.map((value, cellIndex) =>
-                    <Cell key={`${rowIndex}${cellIndex}`} value={value} />
-                )
-            )}
-        </div>
-    )
+  return (
+    <div className="board">
+      {board.map((row, rowIndex) =>
+        row.map((value, cellIndex) => (
+          <Cell key={`${rowIndex}${cellIndex}`} value={value} />
+        ))
+      )}
+    </div>
+  )
 }
 
 export default Board

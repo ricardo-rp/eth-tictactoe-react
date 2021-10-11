@@ -1,13 +1,18 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-const useInput = (initialValue: string) => {
-    const [value, setValue] = useState(initialValue)
+type BindInput = {
+  value: string
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value)
-    }
+function useInput(initialValue: string): BindInput {
+  const [value, setValue] = useState(initialValue)
 
-    return { value, onChange }
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value)
+  }
+
+  return { value, onChange }
 }
 
 export default useInput
