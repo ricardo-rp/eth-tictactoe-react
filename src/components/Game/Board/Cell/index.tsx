@@ -1,10 +1,10 @@
 import { CellValue } from '../../../../lib/types'
 import './Cell.css'
+import { StyledCell } from './styles'
 
-const Cell: React.FC<{ value: CellValue }> = ({ value }) => {
-  const className = `cell ${!value && 'empty'}`
-
-  return <div className={className}>{value}</div>
+export type CellProps = { value: CellValue }
+const Cell: React.FC<CellProps> = ({ value }) => {
+  return <StyledCell value={value}>{value}</StyledCell>
 }
 
 export default Cell

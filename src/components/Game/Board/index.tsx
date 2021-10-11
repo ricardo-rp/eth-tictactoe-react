@@ -1,24 +1,24 @@
 import { GameBoard } from '../../../lib/types'
 import Cell from './Cell'
+import { StyledBoard } from './styles'
 
 export const defBoard: GameBoard = [
-  ['', '', ''],
-  ['', '', ''],
-  ['', '', ''],
+  ['x', '', ''],
+  ['', 'o', ''],
+  ['', '', 'x'],
 ]
 
-const Board: React.FC<{ board?: GameBoard }> = ({ board }) => {
+type BoardProps = { board?: GameBoard }
+export function Board({ board = defBoard }: BoardProps): JSX.Element | null {
   if (!board) return null
 
   return (
-    <Board>
+    <StyledBoard>
       {board.map((row, rowIndex) =>
         row.map((value, cellIndex) => (
           <Cell key={`${rowIndex}${cellIndex}`} value={value} />
         ))
       )}
-    </Board>
+    </StyledBoard>
   )
 }
-
-export default Board

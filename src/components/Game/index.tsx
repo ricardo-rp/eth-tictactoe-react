@@ -2,7 +2,7 @@ import { injected } from '../connector'
 import { useWeb3React } from '@web3-react/core'
 import NewGameForm from './NewGameForm'
 import { ConnectByIdForm } from './ConnectByIdForm'
-import Board from './Board'
+import { Board } from './Board'
 import { FormTitle } from './styles'
 
 export function Game(): React.ReactElement {
