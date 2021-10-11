@@ -1,3 +1,5 @@
+import { Form } from '../../Form'
+
 type NewGameFormProps = {
   active: boolean
   account: string
@@ -11,7 +13,7 @@ const NewGameForm: React.FC<NewGameFormProps> = ({
   // TODO: Install unform/formik to handle form data and onSubmit function
 
   return (
-    <form className="form" id="addressForm">
+    <Form id="addressForm">
       <label>Player A Address</label>
       <label>{active ? account : 'Not Connected'}</label>
       <input id="addressA" value={account} style={{ display: 'none' }} />
@@ -31,7 +33,7 @@ const NewGameForm: React.FC<NewGameFormProps> = ({
       <button type="button" onClick={onSubmit}>
         Submit
       </button>
-    </form>
+    </Form>
   )
 }
 

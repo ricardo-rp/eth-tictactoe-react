@@ -3,6 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import NewGameForm from './NewGameForm'
 import { ConnectByIdForm } from './ConnectByIdForm'
 import Board from './Board'
+import { FormTitle } from './styles'
 
 export function Game(): React.ReactElement {
   const { active, account, activate, deactivate } = useWeb3React()
@@ -56,7 +57,7 @@ export function Game(): React.ReactElement {
         Disconnect
       </button>
 
-      <h5 className="formLabel">New Game</h5>
+      <FormTitle>New Game</FormTitle>
       <NewGameForm
         active={active}
         // We already checked the connection is active. `account` is defined
@@ -64,7 +65,7 @@ export function Game(): React.ReactElement {
         onSubmit={onClickCreateGame}
       />
 
-      <h5 className="formLabel">Connect by GameId</h5>
+      <FormTitle>Connect by GameId</FormTitle>
       <ConnectByIdForm />
 
       <Board />
