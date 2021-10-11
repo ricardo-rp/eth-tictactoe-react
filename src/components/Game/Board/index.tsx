@@ -1,4 +1,4 @@
-import { GameBoard } from '../../lib/types'
+import { GameBoard } from '../../../lib/types'
 import Cell from './Cell'
 import './Board.css'
 
