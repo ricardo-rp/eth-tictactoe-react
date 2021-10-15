@@ -38,6 +38,7 @@ export async function createGame(chainId: number | undefined, sender: string | n
 
 export async function getBoard(chainId: number | undefined, gameId: string) {
     const game = await getContractInstance(chainId).methods.games(gameId).call();
+    
     console.log(game);
     console.log(game.board);
     return game.board;

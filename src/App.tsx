@@ -19,7 +19,7 @@ function App() {
   const sigB = useInput('')
   const gameId = useInput('')
   const [game, setGame] = useState({ activeGameId: '' })
-  const [board, updateBoard] = useState([['', '', ''], ['', '', ''], ['', '', '']])
+  const [board, updateBoard] = useState<GameBoard>([['', '', ''], ['', '', ''], ['', '', '']])
 
   async function connect() {
     try {
