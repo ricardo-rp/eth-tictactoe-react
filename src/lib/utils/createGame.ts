@@ -51,5 +51,5 @@ export async function createGame(
   return gameId
 }
 
-const hashMatch = (match: Match): string =>
+export const hashMatch = (match: Match): string =>
   web3.utils.soliditySha3(match.playerA, match.playerB, match.nonce) as string

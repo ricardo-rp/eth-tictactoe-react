@@ -4,9 +4,11 @@ import { NewGameForm } from './NewGameForm'
 import { ConnectByIdForm } from './ConnectByIdForm'
 import { Board } from './Board'
 import { FormTitle } from './styles'
+import { useGame } from '../../lib/context/gameContext'
 
 export function Game(): React.ReactElement {
   const { active, account, activate, deactivate } = useWeb3React()
+  const arg = useGame()
 
   async function connect() {
     try {
