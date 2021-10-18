@@ -7,7 +7,6 @@ import { FormTitle } from './styles'
 
 export function Game(): React.ReactElement {
   const { active, activate, deactivate } = useWeb3React()
-
   async function connect() {
     try {
       await activate(injected)
