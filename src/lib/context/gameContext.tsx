@@ -24,6 +24,7 @@ type CreateGame = (
 type GameContextData = {
   signGame: SignGame
   createGame: CreateGame
+  account: string | null | undefined
 }
 
 const GameContext = createContext({} as GameContextData)
@@ -74,6 +75,7 @@ export const GameProvider: React.FC = ({ children }) => {
       value={{
         signGame,
         createGame,
+        account,
       }}
     >
       {children}

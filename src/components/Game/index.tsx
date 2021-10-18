@@ -4,11 +4,9 @@ import { NewGameForm } from './NewGameForm'
 import { ConnectByIdForm } from './ConnectByIdForm'
 import { Board } from './Board'
 import { FormTitle } from './styles'
-import { useGameContext } from '../../lib/context/gameContext'
 
 export function Game(): React.ReactElement {
-  const { active, account, activate, deactivate } = useWeb3React()
-  const { createGame, signGame } = useGameContext()
+  const { active, activate, deactivate } = useWeb3React()
 
   async function connect() {
     try {
@@ -26,33 +24,17 @@ export function Game(): React.ReactElement {
     }
   }
 
-  const onClickCreateGame = async () => {
-    console.log('onClickCreateGame')
-    // try {
-    //   if (account && addrB && nonce && sigA && sigB) {
-    //     const gameId = await createGame(chainId, account, account, addrB, parseInt(nonce), sigA, sigB)
-    //     console.log({ gameId })
-    //   } else {
-    //     if (!account) return
-    //     const { match, pAsig } = await signGame(account, account, addrB, parseInt(nonce))
-    //     console.log({ match ,pAsig })
-    //     // Sign
-    //   }
-
-    // } catch (e) {
-    //   console.error(e)
-    // }
-  }
-
-  if (!active)
+  if (!active) {
     return (
       <button type="button" onClick={connect}>
         Connect to Metamask
       </button>
     )
+  } else {
+    // TODO: Add logical assertion that `account` is not null or undefined after this condition
+  }
 
   // TODO: Add tabs for user to select a menu
-  // TODO: Install styled-jsx and scope styles correctly
   return (
     <>
       <button type="button" onClick={disconnect}>
@@ -60,12 +42,7 @@ export function Game(): React.ReactElement {
       </button>
 
       <FormTitle>New Game</FormTitle>
-      <NewGameForm
-        active={active}
-        // We already checked the connection is active. `account` is defined
-        account={account as string}
-        onSubmit={onClickCreateGame}
-      />
+      <NewGameForm />
 
       <FormTitle>Connect by GameId</FormTitle>
       <ConnectByIdForm />

@@ -1,38 +1,64 @@
+import { useGameContext } from '../../../lib/context/gameContext'
 import { Form } from '../../Form'
 
-type NewGameFormProps = {
-  active: boolean
-  account: string
-  onSubmit: () => Promise<void>
-}
-export const NewGameForm: React.FC<NewGameFormProps> = ({
-  active,
-  account,
-  onSubmit,
-}) => {
-  // TODO: Install unform/formik to handle form data and onSubmit function
+export function NewGameForm(): JSX.Element | null {
+  const { account } = useGameContext()
 
-  return (
-    <Form id="addressForm">
-      <label>Player A Address</label>
-      <label>{active ? account : 'Not Connected'}</label>
-      <input id="addressA" value={account} style={{ display: 'none' }} />
+  // TODO: Install unform or formik to handle form data and onSubmit function
+  async function tryCreateGame() {
+    console.log('tryCreateGame')
+    // try {
+    //   if (account && addrB && nonce && sigA && sigB) {
+    //     const gameId = await createGame(
+    //       chainId,
+    //       account,
+    //       account,
+    //       addrB,
+    //       parseInt(nonce),
+    //       sigA,
+    //       sigB
+    //     )
+    //     console.log({ gameId })
+    //   } else {
+    //     if (!account) return
+    //     const { match, pAsig } = await signGame(
+    //       account,
+    //       account,
+    //       addrB,
+    //       parseInt(nonce)
+    //     )
+    //     console.log({ match, pAsig })
+    //     // Sign
+    //   }
+    // } catch (e) {
+    //   console.error(e)
+    // }
+  }
 
-      <label htmlFor="addressB">Player B Address</label>
-      <input id="addressB" />
+  if (account)
+    return (
+      <Form id="addressForm">
+        <label>Player A Address</label>
+        <label>{account}</label>
+        <input id="addressA" value={account} style={{ display: 'none' }} />
 
-      <label htmlFor="nonce">Nonce</label>
-      <input id="nonce" />
+        <label htmlFor="addressB">Player B Address</label>
+        <input id="addressB" />
 
-      <label htmlFor="sigA">Player A Signature</label>
-      <input id="sigA" />
+        <label htmlFor="nonce">Nonce</label>
+        <input id="nonce" />
 
-      <label htmlFor="sigB">Player B Signature</label>
-      <input id="sigB" />
+        <label htmlFor="sigA">Player A Signature</label>
+        <input id="sigA" />
 
-      <button type="button" onClick={onSubmit}>
-        Submit
-      </button>
-    </Form>
-  )
+        <label htmlFor="sigB">Player B Signature</label>
+        <input id="sigB" />
+
+        <button type="button" onClick={tryCreateGame}>
+          Submit
+        </button>
+      </Form>
+    )
+
+  return null
 }
