@@ -5,6 +5,7 @@ import { web3 } from '../utils/web3'
 import util from 'ethereumjs-util'
 import { getContractInstance } from '../contract/abi'
 import { useWeb3React } from '@web3-react/core'
+import { BindInput, useInput } from '../hooks/useInput'
 
 type SignGame = (
   addressA: string,
@@ -13,7 +14,6 @@ type SignGame = (
 ) => Promise<MatchSignedByA>
 
 type CreateGame = (
-  chainId: number | undefined,
   addressA: string,
   addressB: string,
   nonce: number,
@@ -22,6 +22,11 @@ type CreateGame = (
 ) => Promise<string>
 
 type GameContextData = {
+  addrA: BindInput
+  addrB: BindInput
+  sigA: BindInput
+  sigB: BindInput
+  nonce: BindInput
   signGame: SignGame
   createGame: CreateGame
   account: string | null | undefined
@@ -30,30 +35,35 @@ type GameContextData = {
 const GameContext = createContext({} as GameContextData)
 
 export const GameProvider: React.FC = ({ children }) => {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
+  const addrA = useInput('')
+  const addrB = useInput('')
+  const sigA = useInput('')
+  const sigB = useInput('')
+  const nonce = useInput('')
 
-  const signGame: SignGame = async function (addressA, addressB, nonce) {
+  const signGame = async function (
+    addressA: string,
+    addressB: string,
+    nonce: number
+  ): Promise<MatchSignedByA> {
     const match: Match = {
       playerA: addressA,
       playerB: addressB,
-      nonce, //Math.floor(new Date().getTime() / 1000)
+      nonce: nonce, //Math.floor(new Date().getTime() / 1000)
     }
     if (addressA !== account && addressB !== account)
       throw Error('You must be part of the game')
-
     const pAsig = await web3.eth.personal.sign(hashMatch(match), account, '')
-
     return { match, pAsig }
   }
-
-  const createGame: CreateGame = async function (
-    chainId,
-    addressA,
-    addressB,
-    nonce,
-    sigA,
-    sigB
-  ) {
+  const createGame = async function (
+    addressA: string,
+    addressB: string,
+    nonce: number,
+    sigA: string,
+    sigB: string
+  ): Promise<string> {
     const match: Match = {
       playerA: addressA,
       playerB: addressB,
@@ -69,10 +79,14 @@ export const GameProvider: React.FC = ({ children }) => {
       .send({ from: account })
     return gameId
   }
-
   return (
     <GameContext.Provider
       value={{
+        addrA,
+        addrB,
+        sigA,
+        sigB,
+        nonce,
         signGame,
         createGame,
         account,

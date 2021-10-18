@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type BindInput = {
+export type BindInput = {
   value: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
