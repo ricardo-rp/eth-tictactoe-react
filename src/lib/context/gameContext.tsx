@@ -80,6 +80,6 @@ export const GameProvider: React.FC = ({ children }) => {
     </GameContext.Provider>
   )
 }
-export const useGame = (): GameContextData => useContext(GameContext)
+export const useGameContext = (): GameContextData => useContext(GameContext)
 
 export default GameContext

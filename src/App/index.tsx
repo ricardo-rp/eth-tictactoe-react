@@ -1,5 +1,6 @@
 import { GlobalStyle } from '../styles/global'
 import { Game } from '../components/Game'
+import { GameProvider } from '../lib/context/gameContext'
 
 import { Container, Header } from './styles'
 
@@ -9,7 +10,9 @@ export function App(): React.ReactElement {
       <GlobalStyle />
       <Header>Eth tic-tac-toe</Header>
 
-      <Game />
+      <GameProvider>
+        <Game />
+      </GameProvider>
     </Container>
   )
 }
