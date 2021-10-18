@@ -4,6 +4,7 @@ import { NewGameForm } from './NewGameForm'
 import { ConnectByIdForm } from './ConnectByIdForm'
 import { Board } from './Board'
 import { FormTitle } from './styles'
+import { AcceptGameForm } from './AcceptGameForm'
 
 export function Game(): React.ReactElement {
   const { active, activate, deactivate } = useWeb3React()
@@ -42,6 +43,9 @@ export function Game(): React.ReactElement {
 
       <FormTitle>New Game</FormTitle>
       <NewGameForm />
+
+      <FormTitle>Accept Match</FormTitle>
+      <AcceptGameForm />
 
       <FormTitle>Connect by GameId</FormTitle>
       <ConnectByIdForm />

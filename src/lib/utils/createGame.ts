@@ -5,7 +5,7 @@ import util from 'ethereumjs-util'
 
 export type MatchSignedByA = {
   match: Match
-  pAsig: string
+  signature: string
 }
 
 // TODO Create an EIP712 compatible contract and frontend
@@ -22,8 +22,8 @@ export async function signGame(
   }
   if (addressA !== signer && addressB !== signer)
     throw Error('You must be part of the game')
-  const pAsig = await web3.eth.personal.sign(hashMatch(match), signer, '')
-  return { match, pAsig }
+  const signature = await web3.eth.personal.sign(hashMatch(match), signer, '')
+  return { match, signature }
 }
 
 export async function createGame(

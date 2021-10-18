@@ -2,15 +2,15 @@ import { createContext, useContext } from 'react'
 import { Match } from '../types'
 import { hashMatch, MatchSignedByA } from '../utils/createGame'
 import { web3 } from '../utils/web3'
-import util from 'ethereumjs-util'
 import { getContractInstance } from '../contract/abi'
 import { useWeb3React } from '@web3-react/core'
 import { BindInput, useInput } from '../hooks/useInput'
+import { fromRpcSig } from 'ethereumjs-util'
 
 type SignGame = (
   addressA: string,
   addressB: string,
-  nonce: number
+  nonce?: number
 ) => Promise<MatchSignedByA>
 
 type CreateGame = (
@@ -45,17 +45,21 @@ export const GameProvider: React.FC = ({ children }) => {
   const signGame = async function (
     addressA: string,
     addressB: string,
-    nonce: number
+    nonce = 0
   ): Promise<MatchSignedByA> {
     const match: Match = {
       playerA: addressA,
       playerB: addressB,
-      nonce: nonce, //Math.floor(new Date().getTime() / 1000)
+      nonce: nonce === 0 ? Math.floor(new Date().getTime() / 1000) : nonce,
     }
     if (addressA !== account && addressB !== account)
       throw Error('You must be part of the game')
-    const pAsig = await web3.eth.personal.sign(hashMatch(match), account, '')
-    return { match, pAsig }
+    const signature = await web3.eth.personal.sign(
+      hashMatch(match),
+      account,
+      ''
+    )
+    return { match, signature }
   }
   const createGame = async function (
     addressA: string,
@@ -69,8 +73,8 @@ export const GameProvider: React.FC = ({ children }) => {
       playerB: addressB,
       nonce: nonce, //Math.floor(new Date().getTime() / 1000)
     }
-    const resA = util.fromRpcSig(sigA)
-    const resB = util.fromRpcSig(sigB)
+    const resA = fromRpcSig(sigA)
+    const resB = fromRpcSig(sigB)
     const gameId = await getContractInstance(chainId)
       .methods.newGame(match, resA, resB)
       .call()
