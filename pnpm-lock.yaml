@@ -9,6 +9,8 @@ specifiers:
   '@types/react': ^17.0.0
   '@types/react-dom': ^17.0.0
   '@types/styled-components': ^5.1.14
+  '@unform/core': ^2.1.6
+  '@unform/web': ^2.1.6
   '@web3-react/core': ^6.1.9
   '@web3-react/injected-connector': ^6.0.7
   eslint-config-prettier: ^8.3.0
@@ -32,6 +34,8 @@ dependencies:
   '@types/react': 17.0.27
   '@types/react-dom': 17.0.9
   '@types/styled-components': 5.1.14
+  '@unform/core': 2.1.6_react@17.0.2
+  '@unform/web': 2.1.6_react-dom@17.0.2+react@17.0.2
   '@web3-react/core': 6.1.9_react@17.0.2
   '@web3-react/injected-connector': 6.0.7
   eslint-config-prettier: 8.3.0
@@ -2731,6 +2735,26 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: false
 
+  /@unform/core/2.1.6_react@17.0.2:
+    resolution: {integrity: sha512-coz9rOS1Y+0zygxTTQB+hY1HJ5ee0A40KBdIy/1IdaiFGT5LhZhCWqMorFh8KcqY3J+SInrpGDMmJYObsjEW9w==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      dot-object: 2.1.4
+      react: 17.0.2
+    dev: false
+
+  /@unform/web/2.1.6_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-EawnCaIYcF7UwbRmYn9k+KQBCkrH5nQjd5IGQL3rKZ7tSQNADenfuPUuBmRFE3mOBcIiIUgcYl0PMK5XFj5zFA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@unform/core': 2.1.6_react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
   /@web3-react/abstract-connector/6.0.7:
     resolution: {integrity: sha512-RhQasA4Ox8CxUC0OENc1AJJm8UTybu/oOCM61Zjg6y0iF7Z0sqv1Ai1VdhC33hrQpA8qSBgoXN9PaP8jKmtdqg==}
     dependencies:
@@ -5118,6 +5142,14 @@ packages:
     dependencies:
       no-case: 3.0.4
       tslib: 2.3.1
+    dev: false
+
+  /dot-object/2.1.4:
+    resolution: {integrity: sha512-7FXnyyCLFawNYJ+NhkqyP9Wd2yzuo+7n9pGiYpkmXCTYa8Ci2U0eUNDVg5OuO5Pm6aFXI2SWN8/N/w7SJWu1WA==}
+    hasBin: true
+    dependencies:
+      commander: 4.1.1
+      glob: 7.2.0
     dev: false
 
   /dot-prop/5.3.0:
