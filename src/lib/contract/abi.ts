@@ -3,11 +3,11 @@ import { AbiItem } from 'web3-utils'
 import { IHash } from '../types'
 
 export const TIC_TAC_TOE: IHash = {
-  4: '0xf71d78FE823671ECaF37846993980ea224f6F2CF',
+  4: '0xEBfAFF6739b502122f4326703be8bdB72e480650',
 }
 
 export const ELO_RATING: IHash = {
-  4: '0x946C72fEDD3904d3e031b40e07E4bD5a3Cd2c8AF',
+  4: '0xFa1365F76b7CBa9AE519C8882c8507790AEa9DFb',
 }
 
 export const TTT_ABI = [
@@ -338,6 +338,26 @@ export const TTT_ABI = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'gameId',
+        type: 'bytes32',
+      },
+    ],
+    name: 'getGameBoard',
+    outputs: [
+      {
+        internalType: 'enum TicTacToe.Players[3][3]',
+        name: 'board',
+        type: 'uint8[3][3]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
   },
 ] as AbiItem[]
 
