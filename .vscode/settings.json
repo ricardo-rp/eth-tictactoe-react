@@ -3,4 +3,7 @@
         "titleBar.activeBackground": "#1644a7",
         "titleBar.inactiveBackground": "#163880"
     },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "eslint.format.enable": true,
+    "[typescriptreact]": {"editor.defaultFormatter": "dbaeumer.vscode-eslint"}
 }
