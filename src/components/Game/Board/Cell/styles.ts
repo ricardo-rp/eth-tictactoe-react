@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
-import { CellProps } from '.'
+import { StyleProps } from '.'
 
-export const StyledCell = styled.div(({ value }: CellProps) => {
+export const StyledCell = styled.div(({ value }: StyleProps) => {
   return css`
     display: flex;
 

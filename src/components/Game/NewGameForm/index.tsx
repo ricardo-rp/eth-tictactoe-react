@@ -1,20 +1,21 @@
 import { useWeb3React } from '@web3-react/core'
 import { useState } from 'react'
 import { useGameContext } from '../../../lib/context/gameContext'
+import { useInput } from '../../../lib/hooks/useInput'
 import { Form } from '../../Form'
 
 export function NewGameForm(): JSX.Element | null {
-  const { addrB, signGame } = useGameContext()
+  const { signGame } = useGameContext()
   const { account } = useWeb3React()
-  const [value, setValue] = useState('')
+  const [matchString, setMatchString] = useState('')
+  const addrB = useInput('')
   // TODO: Install unform or formik to handle form data and onSubmit function
   async function tryCreateGame() {
-    console.log('tryCreateGame')
     try {
       if (!account) return
       const { match, signature } = await signGame(account, addrB.value)
-      console.log({ match, signature })
-      setValue(JSON.stringify({ match, signature }))
+      // console.log({ match, signature })
+      setMatchString(JSON.stringify({ match, signature }))
       // Sign
     } catch (e) {
       console.error(e)
@@ -40,9 +41,9 @@ export function NewGameForm(): JSX.Element | null {
         <label htmlFor="sigB">Player B Signature</label>
         <input id="sigB" {...sigB} /> */}
 
-        {value ? (
+        {matchString ? (
           <label htmlFor="matchString" style={{ wordWrap: 'normal' }}>
-            {value}
+            {matchString}
           </label>
         ) : null}
         <button type="button" onClick={tryCreateGame}>

@@ -12,18 +12,15 @@ export function AcceptGameForm(): JSX.Element | null {
   // TODO: Install unform or formik to handle form data and onSubmit function
   async function tryCreateGame() {
     const { match, signature } = JSON.parse(matchString.value)
-    console.log(match)
-    console.log(signature)
     const sign = await signGame(match.playerA, match.playerB, match.nonce)
 
-    const gameId = await createGame(
+    await createGame(
       match.playerA,
       match.playerB,
       match.nonce,
       signature,
       sign.signature
     )
-    console.log(gameId)
   }
 
   if (account)
