@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Form as UnformForm } from '@unform/web'
+// import { Form as UnformForm } from '@unform/web'
 
-export const Form = styled(UnformForm)`
+export const Form = styled.form`
   display: flex;
   border: solid 2px rgba(255, 255, 255, 0.2);
   flex-direction: column;
