@@ -3,10 +3,12 @@ import { ContractInterface } from 'ethers'
 
 export const TIC_TAC_TOE: IHash = {
   4: '0x8060dF01CB62C5F4ae511b28F1B185aF69AaF1cf',
+  80001: '0xDAA9af827182BbEd966613Aa3C293361884ec952',
 }
 
 export const ELO_RATING: IHash = {
   4: '0x74e7072cE539Efd7eDd80C297B1127DD29C5e3c6',
+  80001: '0x4B0a43025C518e08DbB0AfdE40d7484e0698FddB',
 }
 
 export const TTT_ABI = [
