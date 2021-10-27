@@ -27,7 +27,12 @@ export function NewGameForm(): JSX.Element | null {
       <Form id="addressForm">
         <label>Player A Address</label>
         <label>{account}</label>
-        <input id="addressA" value={account} style={{ display: 'none' }} />
+        <input
+          id="addressA"
+          value={account}
+          readOnly
+          style={{ display: 'none' }}
+        />
 
         <label htmlFor="addressB">Player B Address</label>
         <input id="addressB" {...addrB} />

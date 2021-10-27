@@ -1,13 +1,12 @@
-import { web3 } from '../utils/web3'
-import { AbiItem } from 'web3-utils'
 import { IHash } from '../types'
+import { ContractInterface } from 'ethers'
 
 export const TIC_TAC_TOE: IHash = {
-  4: '0xEBfAFF6739b502122f4326703be8bdB72e480650',
+  4: '0x8060dF01CB62C5F4ae511b28F1B185aF69AaF1cf',
 }
 
 export const ELO_RATING: IHash = {
-  4: '0xFa1365F76b7CBa9AE519C8882c8507790AEa9DFb',
+  4: '0x74e7072cE539Efd7eDd80C297B1127DD29C5e3c6',
 }
 
 export const TTT_ABI = [
@@ -15,7 +14,7 @@ export const TTT_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'bytes32',
         name: 'gameId',
         type: 'bytes32',
@@ -34,7 +33,7 @@ export const TTT_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'bytes32',
         name: 'gameId',
         type: 'bytes32',
@@ -72,7 +71,7 @@ export const TTT_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'bytes32',
         name: 'gameId',
         type: 'bytes32',
@@ -97,7 +96,7 @@ export const TTT_ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'bytes32',
         name: 'gameId',
         type: 'bytes32',
@@ -359,12 +358,4 @@ export const TTT_ABI = [
     type: 'function',
     constant: true,
   },
-] as AbiItem[]
-
-// export const contractInstance = new web3.eth.Contract(TTT_ABI, TTT_ADDRESS)
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getContractInstance(chainId: number | undefined) {
-  if (chainId === undefined) throw Error('ChainId undefined')
-  return new web3.eth.Contract(TTT_ABI, TIC_TAC_TOE[chainId])
-}
+] as ContractInterface

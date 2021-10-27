@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { App } from './App'
-import Web3 from 'web3'
-import { provider } from 'web3-core'
+import { Web3Provider } from '@ethersproject/providers'
 import { Web3ReactProvider } from '@web3-react/core'
 
-function getLibrary(provider: provider) {
-  return new Web3(provider)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getLibrary(provider: any) {
+  return new Web3Provider(provider)
 }
 
 ReactDOM.render(

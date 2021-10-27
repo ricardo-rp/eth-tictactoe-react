@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { GameBoard, Match } from '../types'
-import { hashMatch, MatchSignedByA } from '../utils/createGame'
-import { web3 } from '../utils/web3'
-import { getContractInstance } from '../contract/abi'
+import { hashMatch, MatchSignedByA } from '../utils/hash_util'
+import { TIC_TAC_TOE, TTT_ABI } from '../contract/abi'
 import { useWeb3React } from '@web3-react/core'
 import { fromRpcSig } from 'ethereumjs-util'
+import { ethers } from 'ethers'
 
 type SignGame = (
   addressA: string,
@@ -21,23 +21,24 @@ type CreateGame = (
 ) => Promise<string>
 
 type GameContextData = {
+  contract: ethers.Contract | null
   gameId: string
   board: GameBoard
   canMakeMove: () => boolean
   makeMove: (x: number, y: number) => Promise<void>
-  updateMove: (move: PlayerMadeMoveEvent) => void
+  updateMove: PlayerMadeMoveEvent
   signGame: SignGame
   createGame: CreateGame
   connectGame: (gameId: string) => Promise<boolean>
   account: string | null | undefined
 }
 
-export interface PlayerMadeMoveEvent {
-  gameId: string
-  player: string
-  xCoordinate: number
+type PlayerMadeMoveEvent = (
+  gameId: string,
+  player: string,
+  xCoordinate: number,
   yCoordinate: number
-}
+) => Promise<void>
 
 const GameContext = createContext({} as GameContextData)
 
@@ -51,15 +52,31 @@ interface Game {
   playerA: string
   playerB: string
   nonce: number
-  playerTurn: string
-  winner: string
+  playerTurn: number
+  winner: number
+}
+
+const newGame = {
+  playerA: '',
+  playerB: '',
+  nonce: 0,
+  playerTurn: 0,
+  winner: 0,
 }
 
 export const GameProvider: React.FC = ({ children }) => {
-  const { account, chainId } = useWeb3React()
+  const { account, chainId, library } = useWeb3React()
   const [gameId, setGameId] = useState<string>('')
   const [board, loadBoard] = useState<GameBoard>(newBoard)
-  const [game, setGame] = useState<Game | null>(null)
+  const [game, setGame] = useState<Game>(newGame)
+  const [contract, setContract] = useState<ethers.Contract | null>(null)
+
+  useEffect(() => {
+    if (chainId === undefined) return
+    const signer = library.getSigner()
+    const c = new ethers.Contract(TIC_TAC_TOE[chainId], TTT_ABI, signer)
+    setContract(c)
+  }, [chainId, library, account])
 
   const signGame = async function (
     addressA: string,
@@ -73,14 +90,10 @@ export const GameProvider: React.FC = ({ children }) => {
     }
     if (addressA !== account && addressB !== account)
       throw Error('You must be part of the game')
-    const signature = await web3.eth.personal.sign(
-      hashMatch(match),
-      account,
-      ''
-    )
+    const hash = hashMatch(match)
+    const signature = await library.getSigner().signMessage(hash)
     return { match, signature }
   }
-  // 0xfd2fe4f41f823264fbb6a42a899686c31f0e76cfc23c83bda6e34e426a14bbad
   const createGame = async function (
     addressA: string,
     addressB: string,
@@ -95,29 +108,22 @@ export const GameProvider: React.FC = ({ children }) => {
     }
     const resA = fromRpcSig(sigA)
     const resB = fromRpcSig(sigB)
-    const gameId = await getContractInstance(chainId)
-      .methods.newGame(match, resA, resB)
-      .call()
-    await getContractInstance(chainId)
-      .methods.newGame(match, resA, resB)
-      .send({ from: account })
-    console.log(gameId)
-    const game = await getContractInstance(chainId).methods.games(gameId).call()
-    setGameId(gameId)
-    setGame(game as Game)
+    const gameId = await contract?.callStatic.newGame(match, resA, resB)
+    await (await contract?.newGame(match, resA, resB)).wait()
+
+    await connectGame(gameId)
     return gameId
   }
   const connectGame = async function (gameId: string): Promise<boolean> {
-    const game = await getContractInstance(chainId).methods.games(gameId).call()
+    console.log(gameId)
+    const game = await contract?.games(gameId)
     if (game.playerA !== account && game.playerB !== account)
       throw Error('You must be part of the game')
-    const currentBoard = await getContractInstance(chainId)
-      .methods.getGameBoard(gameId)
-      .call()
+    const currentBoard = await contract?.getGameBoard(gameId)
     const fixedBoard = currentBoard.map((row: []) => {
-      return row.map((cell: string) => {
-        if (cell === '1') return 'x'
-        if (cell === '2') return 'o'
+      return row.map((cell: number) => {
+        if (cell === 1) return 'x'
+        if (cell === 2) return 'o'
         return ''
       })
     })
@@ -132,30 +138,35 @@ export const GameProvider: React.FC = ({ children }) => {
   }
 
   const makeMove = async function (x: number, y: number): Promise<void> {
-    await getContractInstance(chainId)
-      .methods.makeMove(gameId, x, y)
-      .send({ from: account })
+    await contract?.makeMove(gameId, x, y)
   }
 
-  const updateMove = async function (move: PlayerMadeMoveEvent): Promise<void> {
-    await getContractInstance(chainId)
-      .methods.makeMove(gameId, move.xCoordinate, move.yCoordinate)
-      .send({ from: account })
+  const updateMove = async function (
+    gameId: string,
+    player: string,
+    xCoordinate: number,
+    yCoordinate: number
+  ): Promise<void> {
     const b = board
-    b[move.xCoordinate][move.yCoordinate] =
-      move.player === game?.playerA ? 'x' : 'o'
+    b[xCoordinate][yCoordinate] = player === game.playerA ? 'x' : 'o'
     loadBoard(b)
+    if (gameId) {
+      const game = await contract?.games(gameId)
+      setGame(game)
+    }
   }
 
   const canMakeMove = function (): boolean {
     return (
-      (game?.playerA === account && game?.playerTurn === '1') ||
-      (game?.playerB === account && game?.playerTurn === '2')
+      game?.winner === 0 &&
+      ((game.playerA === account && game.playerTurn === 1) ||
+        (game.playerB === account && game.playerTurn === 2))
     )
   }
   return (
     <GameContext.Provider
       value={{
+        contract,
         gameId,
         board,
         canMakeMove,
